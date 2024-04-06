@@ -62,8 +62,28 @@
     }
   </style>
 
+  <script>
+    function getLatestCommitDate() {
+        fetch('https://api.github.com/repos/koolboy145/koolboy145.github.io/commits')
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    const latestCommitDate = new Date(data[0].commit.committer.date);
+                    const formattedDate = latestCommitDate.toLocaleDateString();
+                    document.getElementById('latest-commit-date').innerText = formattedDate;
+                } else {
+                    document.getElementById('latest-commit-date').innerText = "No commits found.";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+  </script>
+
 </head>
-<body>
+
+<body onload="getLatestCommitDate()">
 
 <div class="linkfloater">
   Why does<br>this resume<br>look strange?<br>
@@ -96,13 +116,13 @@
   --education
 </p>
 <p class="doublesubtext">
-  <a href="https://www.monash.edu" target="_blank">Monash University</a><br />
+  * <a href="https://www.monash.edu" target="_blank">Monash University</a><br />
 </p>
 <p class="triplesubtext">
   * 
 </p>
 <p class="doublesubtext">
-  <a href="<https://www.karunya.edu" target="_blank">
+  * <a href="<https://www.karunya.edu" target="_blank">
       Karunya University</a><br />
 </p>
 
@@ -231,7 +251,7 @@ abilities as a penetration tester. <br>
 
 </p>
 
-<pre class="manheader">Roshan Jacob John                        2024-04-06                                 roshanjacob(7)
+<pre class="manheader">Roshan Jacob John                        <span id="latest-commit-date"></span>                                 roshanjacob(7)
 </pre>
 
 <p class="footer">
